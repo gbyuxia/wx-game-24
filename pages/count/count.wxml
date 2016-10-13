@@ -1,0 +1,54 @@
+<view>
+    <view class="page-top">         
+        <view class="page-numbers">
+            <button 
+                class="{{disabled[index]?'card disabled':'card active'}}" 
+                wx:for="{{numbers}}" 
+                bindtap="usetoCount" 
+                disabled="{{disabled[index]}}" 
+                data-index = "{{index}}" 
+                data-num="{{item}}">
+                    {{item}}
+            </button>           
+        </view>
+         <view class="page-btn-wrap">
+            <button class="operator" bindtap="useOperator" wx:for="{{['+','-','*','/']}}" data-operator="{{item}}">{{item}}</button>
+        </view>
+    </view>
+    <view class= "count-area">
+         <view class="count-list" wx:for="{{countLine}}">        
+                <text class="number">{{item.firstNum}}</text>
+                <text class="number">{{item.operator}}</text>
+                <text class="number">{{item.nextNum}}</text>
+                <button 
+                    wx:if="{{item.firstNum && item.operator && item.nextNum}}" 
+                    disabled="{{result.length>index}}" 
+                    class="{{result.length>index?'operator disabled':'operator'}}" 
+                    bindtap="toCount">
+                        =
+                </button>
+                <button 
+                    wx:if="{{result[index]}}" 
+                    bindtap="usetoCount" 
+                    data-num = "{{result[index]}}" 
+                    class="{{disabled[index+4]?'operator disabled':'operator'}}" 
+                    disabled="{{disabled[index+4]}}" 
+                    data-index = "{{index+4}}">
+                        {{result[index]}}
+                </button>
+            </view>                
+    </view>
+    
+    <modal 
+        title="{{isSuccessed?'祝贺你，成功了！':'失败了'}}" 
+        confirm-text="下一题" 
+        cancel-text="重新算一次" 
+        hidden="{{modalHidden}}" 
+        bindconfirm="getNextUnit" 
+        bindcancel="reCount"    
+    />
+
+    <view class="page-bottom">
+        <button class="page-btn" bindtap="reCount" wx:if="{{result.length>0}}" >算错了，重新开始</button>
+        <button class="page-btn" bindtap="toSkip">算不出，跳过</button>
+</view>

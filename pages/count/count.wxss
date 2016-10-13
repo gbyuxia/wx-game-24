@@ -1,0 +1,110 @@
+.page-top {
+    width: 750rpx;
+    height: 400rpx;
+    z-index: 2;
+}
+.page-bottom {
+    background-color: #fff;
+    width: 100%;
+    height: 30%;
+    padding-top:100rpx;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 1;
+    box-sizing: border-box;
+    text-align: center;
+}
+.page-btn-wrap {
+    position: absolute;
+    top: 270rpx;
+    width: 100%;
+    text-align: center;
+    z-index: 5;
+}
+.card{
+    display: inline-block; 
+    background: #f3f3f3; 
+    border: 1px solid #f2f2f2;
+    border-radius: 5rpx; 
+    text-align: center; 
+    width: 120rpx; 
+    height: 120rpx; 
+    line-height: 120rpx; 
+    font-size: 60rpx; 
+    margin: 50rpx 20rpx; 
+    color: dodgerblue;
+}
+.page-btn {
+    position:relative;
+    margin:0 20rpx;
+    padding:0;
+    box-sizing:border-box;
+    font-size:32rpx;
+    text-decoration:none;
+    -webkit-tap-highlight-color:transparent;
+    overflow:hidden;
+    display: inline-block;
+    width: 300rpx;
+    height: 85rpx;
+    background-color: #7ca4d5;
+    color: #fffeff;
+    line-height: 85rpx;
+}
+.page-numbers{
+    position: absolute;
+    top: 100rpx;
+    width: 100%;
+    text-align: center;
+    z-index: 5;
+}
+.page-btn-wrap{
+    padding-top: 50rpx;
+}
+.operator{
+    display: inline-block; 
+    background: #6dc8fb; 
+    vertical-align: middle; 
+    border: 1px solid #369fd9; 
+     
+    padding:5rpx 30rpx;
+    line-height:80rpx; 
+    font-size: 60rpx; 
+    margin: 5rpx 30rpx; 
+    color: #fff;
+    box-shadow: 0 1px 0 #fff inset;
+}
+.active{
+    background: #7ca4d5;
+    color: #fffeff;
+    border: 1rpx solid #275181;
+    box-shadow: 0 1px 0 #fff inset;
+}
+.disabled{
+    background: #f2f2f2;
+    color: #ddd;
+    border: none;
+}
+.count-list{
+    padding: 5rpx 0;
+}
+.count-area{
+    position: absolute; 
+    z-index: 6; 
+    width: 100%; 
+    text-align:center; 
+    top: 440rpx; 
+    height: 400rpx;
+}
+.number{
+    display: inline-block; 
+    width: 70rpx; 
+    margin: 10rpx; 
+    vertical-align: middle;
+    text-align: center;
+}
+.result-mask{position: fixed; width: 100%; height: 100%; left: 0; top: 0; background: rgba(0,0,0,.5); z-index: 18;}
+.result-area{position: absolute; width: 100%; text-align: center; z-index: 20; top: 50%; margin-top: -200rpx; font-size:36rpx}
+.mt20{margin-top: 20rpx}
+.success{color: red}
+.fail{color: blue}

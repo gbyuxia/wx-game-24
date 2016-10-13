@@ -1,0 +1,14 @@
+{
+  "pages":[
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/count/count"
+  ],
+  "window":{
+    "backgroundTextStyle": "dark",
+     "navigationBarBackgroundColor": "#06254c",
+     "navigationBarTitleText": "24点游戏",
+     "windowBackground": "#06254c",
+     "navigationBarTextStyle": "white"
+  }
+}
