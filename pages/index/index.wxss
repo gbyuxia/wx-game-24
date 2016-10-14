@@ -19,3 +19,8 @@
     font-size: 24rpx;
     line-height:1.5;
 }
+.grade-box{
+    margin: 30rpx 0 10rpx;    
+}
+label{margin: 10rpx;}
+radio{vertical-align: middle; margin-right: 10rpx}

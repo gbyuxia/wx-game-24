@@ -49,7 +49,14 @@ function isInAry(arr,content){
     }
     return (w=='')? true:false;
 }
-
+//检测空值
+function empty(a){
+    if( a || String(a)=='0'){
+        return true;
+    }else{
+        return false;
+    }
+}
 //数组去重
 function unique(arr) {
     var result = [], hash = {};
@@ -72,19 +79,22 @@ var newUnitNums = [];
 Page({
     data:{
          disabled:[false,false,false,false,false,false],
-         countLine:[{firstNum:'',operator:'',nextNum:''}],
+         countLine:[{firstNum:'',operator:'',nextNum:'',result:'',isCounted:false}],
          result:[],
          isFinised:false,
          isSuccessed:false,
-         modalHidden:true
+         modalHidden:true,
+         grade:'简单',
+         score:{gameIndex:0,successNum:0,skipNum:0,failNum:0}
     },
-    onLoad:function(){
-       this.creatUnit();
+    onLoad:function(options){
+        this.setData({grade:options.grade})
+        this.creatUnit(options.grade);
     },
-    creatUnit(){
+    creatUnit(g){
            //穷举计算。
            let newArr = [],answer = [];
-            function count(){
+           function count(){
                 var str = [createRandomNum(),createRandomNum(),createRandomNum(),createRandomNum()], countStr = arrayList(str),resultArr = [];
                 for(var i =0; i<countStr.length ; i++){
                     var x=countStr[i].a;
@@ -118,35 +128,39 @@ Page({
                     else if (x*y/(z-w)==24){ var aResult = "("+x+"*"+y+")/("+z+"-"+w+")";resultArr.push(aResult);}
                     else if (x*y/(z+w)==24){ var aResult = "("+x+"*"+y+")/("+z+"+"+w+")";resultArr.push(aResult);}
                 }
-                if (resultArr.length == 0){
-                   count();
-                }else{  
-                    answer = unique(resultArr);
-                    newArr = str;
-                   // return;
-                }              
+                answer = unique(resultArr);
+                if ((g=='简单' && answer.length >2) ||(g == '中等' && answer.length==2) || (g == '难' && answer.length==1) ){                                      
+                    newArr = Array.from(str, x => String(x));
+                }else{
+                    count();
+                }      
             }
             count(); 
-             this.setData({
+            this.setData({
                 numbers: newArr,
                 answer:answer,
                 disabled:[false,false,false,false,false,false],
-                countLine:[{firstNum:'',operator:'',nextNum:''}],
-                result:[],
+                countLine:[{firstNum:'',operator:'',nextNum:'',result:'',isCounted:false}],               
                 isFinised:false,
                 isSuccessed:false,
-                modalHidden:true
+                modalHidden:true,
+                'score.gameIndex':Number(this.data.score.gameIndex) +1
             })
-            
-    },
+       },
     
     usetoCount(e){        
-        var num = e.target.dataset.num,index = Number(e.target.dataset.index),disStatus=[],line = this.data.countLine.length - 1,newCountLine = this.data.countLine;
+        var num ,index = Number(e.target.dataset.index),disStatus=[],line = this.data.countLine.length - 1,newCountLine = this.data.countLine;
         let thisLine = this.data.countLine[line];
+        if (index<4){
+            num = this.data.numbers[index];
+        }else{
+            num =this.data.countLine[index - 4].result
+        }
+
         if (thisLine.firstNum && thisLine.nextNum){
             return false;
         }else{
-            if (thisLine.firstNum == ""){
+            if (!empty(thisLine.firstNum)){
                 newCountLine[line].firstNum = num;
             }else{
                 newCountLine[line].nextNum = num;
@@ -168,50 +182,61 @@ Page({
         });
     },
     toCount(){
-        var line = this.data.countLine.length - 1,num1 = Number( this.data.countLine[line].firstNum),num2 = Number( this.data.countLine[line].nextNum),o = this.data.countLine[line].operator,r=this.data.result;
-        var newCountLine = this.data.countLine;
-        
+        var line = this.data.countLine.length - 1,thisLine =this.data.countLine[line], num1 = Number( thisLine.firstNum),num2 = Number(thisLine.nextNum),o = thisLine.operator,r=Number( thisLine.result);
+        var newCountLine = this.data.countLine;       
 
-        if (num1 =='' || num2 == '' || o =='' ){
+        if (!empty(num1) || !empty(num2) || o =='' ){
             return false;
         }else{
             if (o=='+'){
-                r.push(num1 + num2);
+                r=num1 + num2;
             }else if(o == '-'){
-                r.push(num1 - num2);
+                r=num1 - num2;
             }else if(o == '*'){
-                r.push( num1 * num2);
+                r= num1 * num2;
             }else{
-                r.push( num1/num2);
+                r= num1/num2;
             }
-            newCountLine.push({firstNum:'',operator:'',nextNum:''});   
-
-            this.setData({
-                result:r,
-                countLine : newCountLine
-            })
+           
+            newCountLine[line].result = String(r);
+            newCountLine[line].isCounted = true; //当行计算完成
             
             if (this.data.disabled.indexOf(false)<0){
-                this.setData({isFinished:true,modalHidden:false});                        
-                if (this.data.result[this.data.result.length-1] == 24){
-                   this.setData({isSuccessed:true})
+                //已经用完可用数字
+                 this.setData({
+                    countLine : newCountLine,
+                    isFinished:true,
+                    modalHidden:false
+                })
+                 
+                if (Number(r) == 24){
+                    //结果正确
+                   this.setData({
+                       isSuccessed:true,
+                       'score.successNum':Number(this.data.score.successNum) +1
+                    })
                 }else{
-                    this.setData({isSuccessed:false})
+                    //结果错误
+                    this.setData({
+                        isSuccessed:false,
+                        'score.failNum':Number(this.data.score.failNum) +1
+                    })
                 }
             }else{
-                this.setData({isFinished:false})
+                //计算未完成，生成新一行空的算式列式
+                 newCountLine.push({firstNum:'',nextNum:'',isCounted:false});
+                 this.setData({isFinished:false,countLine : newCountLine});
             }
         }
     },
     getNextUnit(){        
-        this.creatUnit();
+        this.creatUnit(this.data.grade);
     },
     reCount(){
         this.setData(
             {
                 disabled:[false,false,false,false,false,false],
-                countLine:[{firstNum:'',operator:'',nextNum:''}],
-                result:[],
+                countLine:[{firstNum:'',operator:'',nextNum:'',result:'',isCounted:false}],
                 isFinised:false,
                 isSuccessed:false,
                 modalHidden:true
@@ -219,7 +244,8 @@ Page({
         )
     },
     toSkip(){
-        this.creatUnit();
+        this.setData({'score.skipNum':Number(this.data.score.skipNum) +1});
+        this.creatUnit(this.data.grade);
     }
 
 });

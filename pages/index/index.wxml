@@ -5,8 +5,15 @@
   </view>
   <view class="specification-box">
     <text class="specification">{{specification}}</text>
+    <view class="grade-box">请选择难易等级：</view>
+        <radio-group class="radio-group" bindchange="radioChange">
+          <label class="radio" wx:for="{{gradeArr}}">
+            <radio value="{{item.name}}" checked="{{item.checked}}"/>{{item.value}}
+          </label>
+      </radio-group>
   </view>
    <view class="page-bottom">
+        
         <button class="page-btn" bindtap="gotoCount">现在就开始玩吧</button>
     </view>
 </view>
