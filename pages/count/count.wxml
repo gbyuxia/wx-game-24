@@ -2,7 +2,7 @@
     <view class="page-top">    
         <view class="score">
             <view class="playing">
-                正在进行第{{score.gameIndex}}轮游戏，难易程度：{{grade}}
+                正在进行第{{score.gameIndex}}轮游戏，难易程度：{{grade}},开始时间：{{begin}}
             </view>
             <text class="win" wx:if="{{score.successNum>0}}">已经赢了{{score.successNum}}轮！</text>
             <text class="fail" wx:if="{{score.failNum>0}}">错了{{score.failNum}}轮！</text>
@@ -56,9 +56,14 @@
         hidden="{{modalHidden}}" 
         bindconfirm="getNextUnit" 
         bindcancel="reCount"    
-    />
+    > 
+        <view wx:for="{{answer}}">
+         <text>算法{{index}}</text>:{{item}}
+          </view>
+    </modal>
 
     <view class="page-bottom">
         <button class="page-btn" bindtap="reCount" wx:if="{{countLine[0].isCounted}}" >算错了，重新开始</button>
         <button class="page-btn" bindtap="toSkip">算不出，跳过</button>
+        
 </view>

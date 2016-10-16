@@ -1,80 +1,10 @@
-
-//遍历数组顺序；
-function arrayList(str) {
-    var mathStr = [];
-    for(var i=0;i<str.length;i++){
-        var num1 = str[i];
-        var numid1  = i;
-        //console.log("i1:"+i);
-        for(var i2=0;i2<str.length;i2++){
-            if(i2 != numid1){
-                //console.log("i2:"+i2);
-                var num2 = str[i2];
-                var numid2  = i2;
-                for(var i3=0;i3<str.length;i3++){
-                    if(i3 != numid1 && i3 != numid2){
-                        //console.log("i3:"+i3);
-                        var num3 = str[i3];
-                        var numid3  = i3;
-                        for(var i4=0;i4<str.length;i4++){
-                            if(i4 != numid1 && i4 != numid2 && i4 != numid3){
-                                //console.log("i4:"+i4);
-                                var num4 = str[i4];
-                                var aMathStr = {
-                                    a:num1,
-                                    b:num2,
-                                    c:num3,
-                                    d:num4};
-                                if(isInAry(mathStr,aMathStr)){
-                                    mathStr.push(aMathStr);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-
-    }
-    return mathStr;
-}
-//检测重复；
-function isInAry(arr,content){
-    var w = '';
-    for(var i; i<=arr.length;i++){
-        if(content==arr[i]){
-            w = i;
-        }
-    }
-    return (w=='')? true:false;
-}
-//检测空值
-function empty(a){
-    if( a || String(a)=='0'){
-        return true;
-    }else{
-        return false;
-    }
-}
-//数组去重
-function unique(arr) {
-    var result = [], hash = {};
-    for (var i = 0, elem; (elem = arr[i]) != null; i++) {
-        if (!hash[elem]) {
-            result.push(elem);
-            hash[elem] = true;
-        }
-    }
-    return result;
-}
+var util = require('../../utils/util.js');
 
 //生成随机数字
 var appInstance = getApp();
 function createRandomNum(){
     return Math.ceil(Math.random()*appInstance.globalData.maxNum);    
 }
-var newUnitNums = [];
 
 Page({
     data:{
@@ -93,9 +23,9 @@ Page({
     },
     creatUnit(g){
            //穷举计算。
-           let newArr = [],answer = [];
+           let newArr = [],answer = [],beginDate = new Date(),thisTime = util.formatTime(beginDate,'hms');
            function count(){
-                var str = [createRandomNum(),createRandomNum(),createRandomNum(),createRandomNum()], countStr = arrayList(str),resultArr = [];
+                var str = [createRandomNum(),createRandomNum(),createRandomNum(),createRandomNum()], countStr = util.arrayList(str),resultArr = [];
                 for(var i =0; i<countStr.length ; i++){
                     var x=countStr[i].a;
                     var y=countStr[i].b;
@@ -128,7 +58,7 @@ Page({
                     else if (x*y/(z-w)==24){ var aResult = "("+x+"*"+y+")/("+z+"-"+w+")";resultArr.push(aResult);}
                     else if (x*y/(z+w)==24){ var aResult = "("+x+"*"+y+")/("+z+"+"+w+")";resultArr.push(aResult);}
                 }
-                answer = unique(resultArr);
+                answer = util.unique(resultArr);
                 if ((g=='简单' && answer.length >2) ||(g == '中等' && answer.length==2) || (g == '难' && answer.length==1) ){                                      
                     newArr = Array.from(str, x => String(x));
                 }else{
@@ -144,7 +74,8 @@ Page({
                 isFinised:false,
                 isSuccessed:false,
                 modalHidden:true,
-                'score.gameIndex':Number(this.data.score.gameIndex) +1
+                'score.gameIndex':Number(this.data.score.gameIndex) +1,
+                begin:thisTime
             })
        },
     
@@ -160,7 +91,7 @@ Page({
         if (thisLine.firstNum && thisLine.nextNum){
             return false;
         }else{
-            if (!empty(thisLine.firstNum)){
+            if (!util.empty(thisLine.firstNum)){
                 newCountLine[line].firstNum = num;
             }else{
                 newCountLine[line].nextNum = num;
@@ -185,7 +116,7 @@ Page({
         var line = this.data.countLine.length - 1,thisLine =this.data.countLine[line], num1 = Number( thisLine.firstNum),num2 = Number(thisLine.nextNum),o = thisLine.operator,r=Number( thisLine.result);
         var newCountLine = this.data.countLine;       
 
-        if (!empty(num1) || !empty(num2) || o =='' ){
+        if (!util.empty(num1) || !util.empty(num2) || o =='' ){
             return false;
         }else{
             if (o=='+'){
