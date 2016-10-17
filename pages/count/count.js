@@ -1,11 +1,4 @@
 var util = require('../../utils/util.js');
-
-//生成随机数字
-var appInstance = getApp();
-function createRandomNum(){
-    return Math.ceil(Math.random()*appInstance.globalData.maxNum);    
-}
-
 Page({
     data:{
          disabled:[false,false,false,false,false,false],
@@ -19,64 +12,25 @@ Page({
     },
     onLoad:function(options){
         this.setData({grade:options.grade})
-        this.creatUnit(options.grade);
+        this.creatUnit();
     },
-    creatUnit(g){
-           //穷举计算。
-           let newArr = [],answer = [],beginDate = new Date(),thisTime = util.formatTime(beginDate,'hms');
-           function count(){
-                var str = [createRandomNum(),createRandomNum(),createRandomNum(),createRandomNum()], countStr = util.arrayList(str),resultArr = [];
-                for(var i =0; i<countStr.length ; i++){
-                    var x=countStr[i].a;
-                    var y=countStr[i].b;
-                    var z=countStr[i].c;
-                    var w=countStr[i].d;
-                    if (x+y+z+w==24){ var aResult = x+"+"+y+"+"+z+"+"+w;resultArr.push(aResult);}
-                    else if (x+y+z-w==24){ var aResult = x+"+"+y+"+"+z+"-"+w;resultArr.push(aResult);}
-                    else if ((x+y)*(z+w)==24){ var aResult = "("+x+"+"+y+")*("+z+"+"+w+")";resultArr.push(aResult);}
-                    else if ((x-y)*(z+w)==24){ var aResult = "("+x+"-"+y+")*("+z+"+"+w+")";resultArr.push(aResult);}
-                    else if ((x-y)*(z-w)==24){ var aResult = "("+x+"-"+y+")*("+z+"-"+w+")";resultArr.push(aResult);}
-                    else if ((x+y+z)*w==24){ var aResult = "("+x+"+"+y+"+"+z+")*"+w;resultArr.push(aResult);}
-                    else if ((x-y-z)*w==24){ var aResult = "("+x+"-"+y+"-"+z+")*"+w;resultArr.push(aResult);}
-                    else if ((x+y-z)*w==24){ var aResult = "("+x+"+"+y+"-"+z+")*"+w;resultArr.push(aResult);}
-                    else if ((x*y*z)/w==24){ var aResult = "("+x+"*"+y+"*"+z+")/"+w;resultArr.push(aResult);}
-                    else if (x*y*(z+w)==24){ var aResult = "("+x+"*"+y+")*("+z+"+"+w+")";resultArr.push(aResult);}
-                    else if (x*y*(z-w)==24){ var aResult = "("+x+"*"+y+")*("+z+"-"+w+")";resultArr.push(aResult);}
-                    else if (x*y*z-w==24){ var aResult = "("+x+"*"+y+")*("+z+")-"+w;resultArr.push(aResult);}
-                    else if (x*y*z+w==24){ var aResult = "("+x+"*"+y+")*("+z+")+"+w;resultArr.push(aResult);}
-                    else if (x*y*z*w==24){ var aResult = x+"*"+y+"*"+z+"*"+w;resultArr.push(aResult);}
-                    else if ((x+y)+(z/w)==24){ var aResult = "("+x+"+"+y+")+("+z+"/"+w+")";resultArr.push(aResult);}
-                    else if ((x+y)*(z/w)==24){ var aResult = "("+x+"+"+y+")*("+z+"/"+w+")";resultArr.push(aResult);}
-                    else if (x*y+z+w==24){ var aResult = "("+x+"*"+y+")+"+z+"+"+w;resultArr.push(aResult);}
-                    else if (x*y+z-w==24){ var aResult = "("+x+"*"+y+")+"+z+"-"+w;resultArr.push(aResult);}
-                    else if (x*y-(z/w)==24){ var aResult = "("+x+"*"+y+")-("+z+"/"+w+")";resultArr.push(aResult);}
-                    else if (x*y+(z/w)==24){ var aResult = "("+x+"*"+y+")-("+z+"/"+w+")";resultArr.push(aResult);}
-                    else if (x*y-z-w==24){ var aResult = "("+x+"*"+y+")-"+z+"-"+w;resultArr.push(aResult);}
-                    else if (x*y+(z*w)==24){ var aResult = "("+x+"*"+y+")+("+z+"*"+w+")";resultArr.push(aResult);}
-                    else if (x*y-(z*w)==24){ var aResult = "("+x+"*"+y+")-("+z+"*"+w+")";resultArr.push(aResult);}
-                    else if (x*y/(z*w)==24){ var aResult = "("+x+"*"+y+")/("+z+"*"+w+")";resultArr.push(aResult);}
-                    else if (x*y/(z-w)==24){ var aResult = "("+x+"*"+y+")/("+z+"-"+w+")";resultArr.push(aResult);}
-                    else if (x*y/(z+w)==24){ var aResult = "("+x+"*"+y+")/("+z+"+"+w+")";resultArr.push(aResult);}
-                }
-                answer = util.unique(resultArr);
-                if ((g=='简单' && answer.length >2) ||(g == '中等' && answer.length==2) || (g == '难' && answer.length==1) ){                                      
-                    newArr = Array.from(str, x => String(x));
-                }else{
-                    count();
-                }      
-            }
-            count(); 
-            this.setData({
-                numbers: newArr,
-                answer:answer,
-                disabled:[false,false,false,false,false,false],
-                countLine:[{firstNum:'',operator:'',nextNum:'',result:'',isCounted:false}],               
-                isFinised:false,
-                isSuccessed:false,
-                modalHidden:true,
-                'score.gameIndex':Number(this.data.score.gameIndex) +1,
-                begin:thisTime
-            })
+    creatUnit(){
+            let g = this.data.grade, newData = util.count(g), beginDate = new Date().getTime();
+            if(newData){
+                this.setData({
+                    numbers: newData.nums,
+                    answer:newData.answer,
+                    disabled:[false,false,false,false,false,false],
+                    countLine:[{firstNum:'',operator:'',nextNum:'',result:'',isCounted:false}],               
+                    isFinised:false,
+                    isSuccessed:false,
+                    modalHidden:true,
+                    'score.gameIndex':this.data.score.gameIndex +1,
+                    beginT:beginDate
+                })
+            }else{
+                this.creatUnit();
+            }            
        },
     
     usetoCount(e){        
@@ -134,23 +88,31 @@ Page({
             
             if (this.data.disabled.indexOf(false)<0){
                 //已经用完可用数字
-                 this.setData({
-                    countLine : newCountLine,
-                    isFinished:true,
-                    modalHidden:false
-                })
-                 
+                let useTime = Math.floor((new Date().getTime() - this.data.beginT)/1000),useTimeTxt='';
+                if (useTime >=60){
+                    useTimeTxt +=parseInt(useTime/60) + '分'+ (useTime % 60) +'秒'
+                }else{
+                    useTimeTxt = useTime +'秒';
+                }          
                 if (Number(r) == 24){
                     //结果正确
                    this.setData({
+                       countLine : newCountLine,
+                       isFinished:true,
+                       modalHidden:false,
                        isSuccessed:true,
-                       'score.successNum':Number(this.data.score.successNum) +1
+                       'score.successNum':Number(this.data.score.successNum) +1,
+                       thisUnitTime:useTimeTxt
                     })
                 }else{
                     //结果错误
                     this.setData({
+                        countLine : newCountLine,
+                        isFinished:true,
+                        modalHidden:false,
                         isSuccessed:false,
-                        'score.failNum':Number(this.data.score.failNum) +1
+                        'score.failNum':Number(this.data.score.failNum) +1,
+                        thisUnitTime:useTimeTxt
                     })
                 }
             }else{
@@ -161,7 +123,7 @@ Page({
         }
     },
     getNextUnit(){        
-        this.creatUnit(this.data.grade);
+        this.creatUnit();
     },
     reCount(){
         this.setData(
@@ -176,7 +138,7 @@ Page({
     },
     toSkip(){
         this.setData({'score.skipNum':Number(this.data.score.skipNum) +1});
-        this.creatUnit(this.data.grade);
+        this.creatUnit();
     }
 
 });

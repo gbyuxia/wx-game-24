@@ -2,7 +2,7 @@
     <view class="page-top">    
         <view class="score">
             <view class="playing">
-                正在进行第{{score.gameIndex}}轮游戏，难易程度：{{grade}},开始时间：{{begin}}
+                正在进行第{{score.gameIndex}}轮游戏，难易程度：{{grade}}
             </view>
             <text class="win" wx:if="{{score.successNum>0}}">已经赢了{{score.successNum}}轮！</text>
             <text class="fail" wx:if="{{score.failNum>0}}">错了{{score.failNum}}轮！</text>
@@ -57,8 +57,10 @@
         bindconfirm="getNextUnit" 
         bindcancel="reCount"    
     > 
+        <view>你用了<text class='win'>{{thisUnitTime}}</text>完成这题的计算</view>
         <view wx:for="{{answer}}">
-         <text>算法{{index}}</text>:{{item}}
+        
+         <text>算法{{index+1}}</text>:{{item}}
           </view>
     </modal>
 
