@@ -2,8 +2,9 @@
     <view class="page-top">    
         <view class="score">
             <view class="playing">
-                正在进行第{{score.gameIndex}}轮游戏，难易程度：{{grade}}
+                正在进行第{{score.gameIndex}}轮游戏，等级：{{grade}}                
             </view>
+           
             <text class="win" wx:if="{{score.successNum>0}}">已经赢了{{score.successNum}}轮！</text>
             <text class="fail" wx:if="{{score.failNum>0}}">错了{{score.failNum}}轮！</text>
             <text class="skip" wx:if="{{score.skipNum>0}}">跳过{{score.skipNum}}轮！</text>
@@ -48,7 +49,10 @@
                
             </view>                
     </view>
-    
+    <modal class="modal" hidden="{{modalHidden2}}" confirm-text="{{grade=='高级'?'看看总成绩':'下一等级'}}"  no-cancel bindconfirm="beginNextGrade">        
+        <view wx:if="{{grade == '高级'}}"><text>最难的一关你已经赢了{{score.successNum+1}}局，这么厉害，你咋不上天呢？</text></view> 
+        <view wx:else >您已经玩了10轮{{grade}}级别的游戏，胜率超过80%，这么厉害，赶紧去玩下个等级的游戏吧！ </view>        
+    </modal>
     <modal 
         title="{{isSuccessed?'祝贺你，成功了！':'失败了'}}" 
         confirm-text="下一题" 
@@ -57,10 +61,15 @@
         bindconfirm="getNextUnit" 
         bindcancel="reCount"    
     > 
-        <view>你用了<text class='win'>{{thisUnitTime}}</text>完成这题的计算</view>
-        <view wx:for="{{answer}}">
-        
-         <text>算法{{index+1}}</text>:{{item}}
+        <block wx:if="{{isSuccessed}}">
+            <text class="win" wx:if="{{thisUnitTime<=12}}">天才，受我一拜！</text>
+            <text class="win" wx:elif="{{thisUnitTime<=18}}">您真是才思敏捷！</text>
+            <text class="skip" wx:elif="{{thisUnitTime<=30}}">争取更快点，加油！</text>
+            <text wx:else>脑子生锈了吧？那更需要动动咯，加油</text>
+            <view>你用了<text class='win'>{{thisUnitTime}}秒</text>完成这题的计算</view>
+        </block>
+          <view wx:for="{{answer}}">        
+            <text>算法{{index+1}}</text>:{{item}}
           </view>
     </modal>
 

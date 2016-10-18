@@ -7,11 +7,13 @@ Page({
          isFinised:false,
          isSuccessed:false,
          modalHidden:true,
-         grade:'简单',
+         modalHidden2:true,         
+         grade:'初级',
+         total:0,
          score:{gameIndex:0,successNum:0,skipNum:0,failNum:0}
     },
     onLoad:function(options){
-        this.setData({grade:options.grade})
+        this.setData({grade:options.grade,userInfo:options.user})
         this.creatUnit();
     },
     creatUnit(){
@@ -67,8 +69,9 @@ Page({
         });
     },
     toCount(){
-        var line = this.data.countLine.length - 1,thisLine =this.data.countLine[line], num1 = Number( thisLine.firstNum),num2 = Number(thisLine.nextNum),o = thisLine.operator,r=Number( thisLine.result);
-        var newCountLine = this.data.countLine;       
+        var oldData = this.data;
+        var line = oldData.countLine.length - 1,thisLine =oldData.countLine[line], num1 = Number( thisLine.firstNum),num2 = Number(thisLine.nextNum),o = thisLine.operator,r=Number( thisLine.result);
+        var newCountLine = oldData.countLine;       
 
         if (!util.empty(num1) || !util.empty(num2) || o =='' ){
             return false;
@@ -86,24 +89,36 @@ Page({
             newCountLine[line].result = String(r);
             newCountLine[line].isCounted = true; //当行计算完成
             
-            if (this.data.disabled.indexOf(false)<0){
+            if (oldData.disabled.indexOf(false)<0){
                 //已经用完可用数字
-                let useTime = Math.floor((new Date().getTime() - this.data.beginT)/1000),useTimeTxt='';
+                let useTime = Math.floor((new Date().getTime() - oldData.beginT)/1000),useTimeTxt='';
                 if (useTime >=60){
                     useTimeTxt +=parseInt(useTime/60) + '分'+ (useTime % 60) +'秒'
                 }else{
                     useTimeTxt = useTime +'秒';
                 }          
-                if (Number(r) == 24){
-                    //结果正确
-                   this.setData({
-                       countLine : newCountLine,
-                       isFinished:true,
-                       modalHidden:false,
-                       isSuccessed:true,
-                       'score.successNum':Number(this.data.score.successNum) +1,
-                       thisUnitTime:useTimeTxt
-                    })
+                if (Number(r) == 24){                   
+                     let thisGradeNum = 1,thisScore=0;
+                     if (oldData.grade == '中级'){
+                         thisGradeNum = 2;
+                     }else if(oldData.grade == '高级'){
+                        thisGradeNum = 3;
+                     }
+                     thisScore = thisGradeNum * Math.ceil(2-(useTime-13)/6) + oldData.total;
+                    if (oldData.score.gameIndex >1 && oldData.score.successNum >=1){                        
+                       this.setData({modalHidden2:false,total:oldData.total + thisScore}); 
+                    }else{
+                        //结果正确
+                        this.setData({
+                            countLine : newCountLine,
+                            isFinished:true,
+                            modalHidden:false,
+                            isSuccessed:true,
+                            'score.successNum':Number(oldData.score.successNum) +1,
+                            thisUnitTime:useTime,
+                            total: thisScore
+                        })
+                    }
                 }else{
                     //结果错误
                     this.setData({
@@ -111,7 +126,7 @@ Page({
                         isFinished:true,
                         modalHidden:false,
                         isSuccessed:false,
-                        'score.failNum':Number(this.data.score.failNum) +1,
+                        'score.failNum':Number(oldData.score.failNum) +1,
                         thisUnitTime:useTimeTxt
                     })
                 }
@@ -139,6 +154,18 @@ Page({
     toSkip(){
         this.setData({'score.skipNum':Number(this.data.score.skipNum) +1});
         this.creatUnit();
+    },
+    beginNextGrade(){
+        if ( this.data.grade=='高级'){
+             wx.navigateTo({ url: '../result/result?total='+this.data.total+'&user='+this.data.userInfo});
+        }else{
+            let newGrade = this.data.grade=="初级"?'中级':'高级';      
+            this.setData({grade:newGrade});  
+            this.creatUnit();
+            this.setData({score:{gameIndex:0,successNum:0,skipNum:0,failNum:0},modalHidden2:true})
+        }
+
+       
     }
 
 });

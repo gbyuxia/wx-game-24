@@ -12,6 +12,7 @@
     font-size: 40rpx;
     color: #ec9601;
     top:150rpx;
+    margin-bottom: 30rpx;
 }
 .specification-box{   
     margin: 100rpx 2rem 200rpx;

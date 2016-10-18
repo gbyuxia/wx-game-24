@@ -1,7 +1,8 @@
 <!--index.wxml-->
 <view class="container">
   <view  bindtap="bindViewTap" class="userinfo">    
-    <text class="welcome">欢迎{{userInfo.nickName}}进入24点小游戏</text>
+    <view class="welcome">欢迎{{userInfo.nickName}}进入24点小游戏</view>
+    <view wx:if = "{{lastScore}}">您上次玩的成绩是{{lastScore}}分</view>
   </view>
   <view class="specification-box">
     <text class="specification">{{specification}}</text>
@@ -12,8 +13,7 @@
           </label>
       </radio-group>
   </view>
-   <view class="page-bottom">
-        
+   <view class="page-bottom">        
         <button class="page-btn" bindtap="gotoCount">现在就开始玩吧</button>
     </view>
 </view>

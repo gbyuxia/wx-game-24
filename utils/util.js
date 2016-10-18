@@ -130,7 +130,7 @@ function count(g){
         else if (x*y/(z+w)==24){ var aResult = "("+x+"*"+y+")/("+z+"+"+w+")";resultArr.push(aResult);}        
     }
     answer = unique(resultArr);
-    if ((g=='简单' && answer.length >2) ||(g == '中等' && answer.length==2) || (g == '难' && answer.length==1) ){                                      
+    if ((g=='初级' && answer.length >2) ||(g == '中级' && answer.length==2) || (g == '高级' && answer.length==1) ){                                      
         newArr = Array.from(str, x => String(x));
         return {answer:answer,nums:newArr}
     }     

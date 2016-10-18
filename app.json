@@ -2,7 +2,9 @@
   "pages":[
     "pages/index/index",
     "pages/logs/logs",
-    "pages/count/count"
+     "pages/count/count",
+    "pages/result/result"
+   
   ],
   "window":{
     "backgroundTextStyle": "dark",

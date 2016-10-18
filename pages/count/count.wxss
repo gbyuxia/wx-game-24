@@ -38,22 +38,7 @@
     margin: 50rpx 20rpx; 
     color: dodgerblue;
 }
-.page-btn {
-    position:relative;
-    margin:0 20rpx;
-    padding:0;
-    box-sizing:border-box;
-    font-size:32rpx;
-    text-decoration:none;
-    -webkit-tap-highlight-color:transparent;
-    overflow:hidden;
-    display: inline-block;
-    width: 300rpx;
-    height: 85rpx;
-    background-color: #7ca4d5;
-    color: #fffeff;
-    line-height: 85rpx;
-}
+
 .page-numbers{
     position: absolute;
     top: 100rpx;
