@@ -105,7 +105,7 @@ Page({
                         thisGradeNum = 3;
                      }
                      thisScore = thisGradeNum * Math.ceil(2-(useTime-13)/6) + oldData.total;
-                    if (oldData.score.gameIndex >1 && oldData.score.successNum >=1){                        
+                    if (oldData.score.gameIndex >9 && oldData.score.successNum >=7){                        
                        this.setData({modalHidden2:false,total:oldData.total + thisScore}); 
                     }else{
                         //结果正确
