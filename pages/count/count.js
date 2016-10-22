@@ -80,7 +80,7 @@ Page({
                 r=num1 + num2;
             }else if(o == '-'){
                 r=num1 - num2;
-            }else if(o == '*'){
+            }else if(o == '×'){
                 r= num1 * num2;
             }else{
                 r= num1/num2;

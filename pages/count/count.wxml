@@ -21,7 +21,7 @@
             </button>           
         </view>
          <view class="page-btn-wrap">
-            <button class="operator" bindtap="useOperator" wx:for="{{['+','-','*','/']}}" data-operator="{{item}}">{{item}}</button>
+            <button class="operator" bindtap="useOperator" wx:for="{{['+','-','×','÷']}}" data-operator="{{item}}">{{item}}</button>
         </view>
     </view>
     <view class= "count-area">
@@ -62,9 +62,9 @@
         bindcancel="reCount"    
     > 
         <block wx:if="{{isSuccessed}}">
-            <text class="win" wx:if="{{thisUnitTime<=12}}">天才，受我一拜！</text>
-            <text class="win" wx:elif="{{thisUnitTime<=18}}">您真是才思敏捷！</text>
-            <text class="skip" wx:elif="{{thisUnitTime<=30}}">争取更快点，加油！</text>
+            <text class="win" wx:if="{{thisUnitTime<=18}}">天才，受我一拜！</text>
+            <text class="win" wx:elif="{{thisUnitTime<=53}}">您真是才思敏捷！</text>
+            <text class="skip" wx:elif="{{thisUnitTime<=60}}">争取更快点，加油！</text>
             <text wx:else>脑子生锈了吧？那更需要动动咯，加油</text>
             <view>你用了<text class='win'>{{thisUnitTime}}秒</text>完成这题的计算</view>
         </block>
