@@ -104,7 +104,7 @@ Page({
                      }else if(oldData.grade == '高级'){
                         thisGradeNum = 3;
                      }
-                     thisScore = thisGradeNum * Math.min(1,Math.ceil(2-(useTime-13)/6)) + oldData.total;
+                     thisScore = thisGradeNum * Math.max(1,Math.ceil(2-(useTime-13)/6)) + oldData.total;
                     if (oldData.score.gameIndex >9 && oldData.score.successNum >=7){                        
                        this.setData({modalHidden2:false,total:oldData.total + thisScore}); 
                     }else{

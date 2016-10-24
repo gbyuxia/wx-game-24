@@ -93,10 +93,24 @@ var appInstance = getApp();
 function createRandomNum(){
     return Math.ceil(Math.random()*appInstance.globalData.maxNum);    
 }
+let easyNumArr = [1,2,3,4,6,8];
+function easyNums(arr){
+    let easyNum = 0;
+    for (let k in arr){
+        for (let i in easyNumArr){
+            if (easyNumArr[i] == arr[k]){
+                easyNum ++;
+            }
+        }
+    }
+    return easyNum;
+}
+
 
 //穷举计算 生成符合规则的新题
 function count(g){
-    let newArr = [],answer = [], str = [createRandomNum(),createRandomNum(),createRandomNum(),createRandomNum()], countStr = arrayList(str),resultArr = [];
+    let newArr = [],answer = [], str = [createRandomNum(),createRandomNum(),createRandomNum(),createRandomNum()], countStr = arrayList(str.sort()),resultArr = [];
+
     for(var i =0; i<countStr.length ; i++){
         var x=countStr[i].a;
         var y=countStr[i].b;
@@ -130,7 +144,7 @@ function count(g){
         else if (x*y/(z+w)==24){ var aResult = "("+x+"*"+y+")/("+z+"+"+w+")";resultArr.push(aResult);}        
     }
     answer = unique(resultArr);
-    if ((g=='初级' && answer.length >2) ||(g == '中级' && answer.length==2) || (g == '高级' && answer.length==1) ){                                      
+    if ((g=='初级' && easyNums(str) >2  && answer.length>0) ||(g == '中级' && easyNums(str)==2 && answer.length>0) || (g == '高级' && easyNums(str)<=1 && answer.length>0) ){                                        
         newArr = Array.from(str, x => String(x));
         return {answer:answer,nums:newArr}
     }     
