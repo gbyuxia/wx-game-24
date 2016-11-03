@@ -49,32 +49,12 @@
                
             </view>                
     </view>
-    <modal class="modal" hidden="{{modalHidden2}}" confirm-text="{{grade=='高级'?'看看总成绩':'下一等级'}}"  no-cancel bindconfirm="beginNextGrade">        
-        <view wx:if="{{grade == '高级'}}"><text>最难的一关你已经赢了{{score.successNum+1}}局，这么厉害，你咋不上天呢？</text></view> 
-        <view wx:else >您已经玩了10轮{{grade}}级别的游戏，胜率超过80%，这么厉害，赶紧去玩下个等级的游戏吧！ </view>        
-    </modal>
-    <modal 
-        title="{{isSuccessed?'祝贺你，成功了！':'失败了'}}" 
-        confirm-text="下一题" 
-        cancel-text="重新算一次" 
-        hidden="{{modalHidden}}" 
-        bindconfirm="getNextUnit" 
-        bindcancel="reCount"    
-    > 
-        <block wx:if="{{isSuccessed}}">
-            <text class="win" wx:if="{{thisUnitTime<=18}}">天才，受我一拜！</text>
-            <text class="win" wx:elif="{{thisUnitTime<=53}}">您真是才思敏捷！</text>
-            <text class="skip" wx:elif="{{thisUnitTime<=60}}">争取更快点，加油！</text>
-            <text wx:else>脑子生锈了吧？那更需要动动咯，加油</text>
-            <view>你用了<text class='win'>{{thisUnitTime}}秒</text>完成这题的计算</view>
-        </block>
-          <view wx:for="{{answer}}">        
-            <text>算法{{index+1}}</text>:{{item}}
-          </view>
-    </modal>
+    
+    <view hidden="false" wx:for="{{answer}}">        
+        <text>算法{{index+1}}</text>:{{item}}
+    </view>
 
     <view class="page-bottom">
         <button class="page-btn" bindtap="reCount" wx:if="{{countLine[0].isCounted}}" >算错了，重新开始</button>
-        <button class="page-btn" bindtap="toSkip">算不出，跳过</button>
-        
-</view>
+        <button class="page-btn" bindtap="toSkip">算不出，跳过</button>        
+    </view>
