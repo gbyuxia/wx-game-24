@@ -25,18 +25,18 @@
     text-align: center;
     z-index: 5;
 }
-.card{
-    display: inline-block; 
+.card{   
     background: #f3f3f3; 
     border: 1px solid #f2f2f2;
     border-radius: 5rpx; 
     text-align: center; 
-    width: 120rpx; 
-    height: 120rpx; 
-    line-height: 120rpx; 
+    padding:2px 16px 2px 13px;
+    height: 110rpx; 
+    line-height: 110rpx; 
     font-size: 60rpx; 
     margin: 50rpx 20rpx; 
     color: dodgerblue;
+     box-shadow: 0 1rpx 0 #fff inset;
 }
 
 .page-numbers{
@@ -45,22 +45,25 @@
     width: 100%;
     text-align: center;
     z-index: 5;
+    display: flex;
+    justify-content:center;
 }
 .page-btn-wrap{
     padding-top: 50rpx;
+     display: flex;
+    justify-content:center;
 }
-.operator{
-    display: inline-block; 
+.operator{   
     background: #6dc8fb; 
     vertical-align: middle; 
-    border: 1px solid #369fd9; 
-     
-    padding:5rpx 30rpx;
+    border: 1px solid #369fd9;      
+    padding:2px 15px 2px 14px;
     line-height:80rpx; 
     font-size: 60rpx; 
-    margin: 5rpx 30rpx; 
+    margin: 5rpx 20rpx; 
+    border-radius: 3rpx;
     color: #fff;
-    box-shadow: 0 1px 0 #fff inset;
+    box-shadow: 0 1rpx 0 #fff inset;
 }
 .active{
     background: #7ca4d5;
@@ -71,10 +74,13 @@
 .disabled{
     background: #f2f2f2;
     color: #ddd;
-    border: none;
+    border: 1rpx solid #ddd;
 }
 .count-list{
     padding: 5rpx 0;
+    display: flex;
+    justify-content:center;
+    align-items: center;
 }
 .count-area{
     position: absolute; 

@@ -10,7 +10,7 @@
             <text class="skip" wx:if="{{score.skipNum>0}}">跳过{{score.skipNum}}轮！</text>
         </view>     
         <view class="page-numbers">
-            <button 
+            <view 
                 class="{{disabled[index]?'card disabled':'card active'}}" 
                 wx:for="{{numbers}}" 
                 bindtap="usetoCount" 
@@ -18,10 +18,10 @@
                 data-index = "{{index}}" 
                 data-num="{{item}}">
                     {{item}}
-            </button>           
+            </view>           
         </view>
          <view class="page-btn-wrap">
-            <button class="operator" bindtap="useOperator" wx:for="{{['+','-','×','÷']}}" data-operator="{{item}}">{{item}}</button>
+            <view class="operator" bindtap="useOperator" wx:for="{{['+','-','×','÷']}}" data-operator="{{item}}">{{item}}</view>
         </view>
     </view>
     <view class= "count-area">
@@ -29,15 +29,15 @@
                 <text class="number">{{item.firstNum}}</text>
                 <text class="number">{{item.operator}}</text>
                 <text class="number">{{item.nextNum}}</text>
-                <button 
+                <view 
                     wx:if="{{item.firstNum && item.operator && item.nextNum}}" 
                     disabled="{{item.isCounted}}" 
                     class="{{item.isCounted?'operator disabled':'operator'}}" 
                     bindtap="toCount">
                         =
-                </button>
+                </view>
                 
-                <button 
+                <view 
                     wx:if="{{item.firstNum && item.operator && item.nextNum && item.isCounted}}" 
                     bindtap="usetoCount" 
                     data-num = "{{item.result}}" 
@@ -45,7 +45,7 @@
                     disabled="{{disabled[index+4]}}" 
                     data-index = "{{index+4}}">
                         {{item.result}}
-                </button>
+                </view>
                
             </view>                
     </view>
