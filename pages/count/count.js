@@ -139,6 +139,7 @@ Page({
                        }
                        wx.showModal({
                             content: cnt,
+                            title:'过关',
                             confirmText:btnTxt ,
                             showCancel:false,
                             success: function(res) {

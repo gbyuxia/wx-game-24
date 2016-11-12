@@ -145,7 +145,10 @@ function count(g){
     }
     answer = unique(resultArr);
     if ((g=='初级' && easyNums(str) >2  && answer.length>0) ||(g == '中级' && easyNums(str)==2 && answer.length>0) || (g == '高级' && easyNums(str)<=1 && answer.length>0) ){                                        
-        newArr = Array.from(str, x => String(x));
+       // newArr = Array.from(str, x => String(x));
+        str.map(function(kk){
+            newArr.push(String(kk));
+        })
         return {answer:answer,nums:newArr}
     }     
 }
