@@ -5,7 +5,7 @@
 }
 .score{text-align: center; padding: 20rpx;color: #888; font-size: 30rpx;}
 .win{color: red; font-size: 40rpx;}
-.playing{font-size: 34rpx; color: #333;}
+.playing{font-size: 34rpx; color: #333; margin-bottom: 10rpx;}
 .page-bottom {
     background-color: #fff;
     width: 100%;
@@ -27,16 +27,17 @@
 }
 .card{   
     background: #f3f3f3; 
-    border: 1px solid #f2f2f2;
+    border: 1rpx solid #f2f2f2;
     border-radius: 5rpx; 
     text-align: center; 
-    padding:2px 16px 2px 13px;
+    padding:2px 6px 2px 0px;
     height: 110rpx; 
     line-height: 110rpx; 
-    font-size: 60rpx; 
+    font-size: 48rpx; 
     margin: 50rpx 20rpx; 
     color: dodgerblue;
-     box-shadow: 0 1rpx 0 #fff inset;
+     box-shadow: none;
+     width: 140rpx;
 }
 
 .page-numbers{
@@ -56,25 +57,34 @@
 .operator{   
     background: #6dc8fb; 
     vertical-align: middle; 
-    border: 1px solid #369fd9;      
-    padding:2px 15px 2px 14px;
+    border: 1px solid #49a9df;      
+    padding:2px 1px 2px 0px;
     line-height:80rpx; 
     font-size: 60rpx; 
-    margin: 5rpx 20rpx; 
-    border-radius: 3rpx;
+    margin: 5rpx 10rpx; 
+    border-radius: 5rpx;
     color: #fff;
+    width:120rpx;
     box-shadow: 0 1rpx 0 #fff inset;
+    box-sizing: content-box;
+    overflow:hidden;
+}
+.operator::after{
+    border: none;
+}
+.card::after{
+    border: none;
 }
 .active{
     background: #7ca4d5;
     color: #fffeff;
-    border: 1rpx solid #275181;
-    box-shadow: 0 1px 0 #fff inset;
+    border: 1rpx solid #6492ca;
+    box-shadow: 0 1rpx 0 #d8e5f5 inset;
 }
 .disabled{
     background: #f2f2f2;
     color: #ddd;
-    border: 1rpx solid #ddd;
+    border: none;
 }
 .count-list{
     padding: 5rpx 0;
