@@ -1,6 +1,6 @@
 <view class="container">
   <view class="congratulation">    
-    恭喜{{userInfo}}完成24点小游戏通关  
+    恭喜{{userInfo}}通关24点数学巧算游戏  
   </view>
   <view class="score-box">
     您的总成绩是

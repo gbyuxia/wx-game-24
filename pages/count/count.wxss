@@ -5,7 +5,7 @@
 }
 .score{text-align: center; padding: 20rpx;color: #888; font-size: 30rpx;}
 .win{color: red; font-size: 40rpx;}
-.playing{font-size: 40rpx; color: #333;}
+.playing{font-size: 34rpx; color: #333;}
 .page-bottom {
     background-color: #fff;
     width: 100%;

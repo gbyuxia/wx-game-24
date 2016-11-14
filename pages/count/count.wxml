@@ -2,7 +2,7 @@
     <view class="page-top">    
         <view class="score">
             <view class="playing">
-                正在进行第{{score.gameIndex}}轮游戏，等级：{{grade}}                
+                正在进行第<text class="fail">{{score.gameIndex}}</text>轮游戏，等级：{{grade}}                
             </view>
            
             <text class="win" wx:if="{{score.successNum>0}}">已经赢了{{score.successNum}}轮！</text>

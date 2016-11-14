@@ -1,7 +1,7 @@
 <!--index.wxml-->
 <view class="container">
   <view  bindtap="bindViewTap" class="userinfo">    
-    <view class="welcome">欢迎{{userInfo.nickName}}进入24点小游戏</view>
+    <view class="welcome">欢迎{{userInfo.nickName}}进入24点数学巧算游戏</view>
     <view wx:if = "{{lastScore}}">您上次玩的成绩是{{lastScore}}分</view>
   </view>
   <view class="specification-box">

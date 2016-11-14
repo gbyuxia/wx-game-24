@@ -130,17 +130,19 @@ Page({
                     })
                 }
                 //每局完成的反馈
-                if (oldData.score.gameIndex >9 && oldData.score.successNum >=8){ 
+                if (oldData.score.gameIndex >=10 && oldData.score.successNum >=8){ 
                        let that=this, btnTxt= oldData.grade=='高级'?'看看总成绩':'下一等级',cnt = '';
                        if (oldData.grade=='高级'){
-                           cnt="最难的一关你已经赢了"+(oldData.score.successNum+1) +"局，这么厉害，你咋不上天呢？"       
+                           cnt="最难的一关你已经赢了"+(oldData.score.successNum) +"局，这么厉害，你咋不上天呢？"       
                        }else{
-                           cnt="您已经玩了10轮"+oldData.grade +"级别的游戏，胜率超过80%，这么厉害，赶紧去玩下个等级的游戏吧！"
+                           cnt="您已经玩了"+oldData.score.successNum+"轮"+oldData.grade +"级别的游戏，胜率达到"+(oldData.score.successNum/oldData.score.gameIndex)*100+"%，这么厉害，赶紧去玩下个等级的游戏吧！"
                        }
                        wx.showModal({
                             content: cnt,
+                            tt:'过关',
                             confirmText:btnTxt ,
                             showCancel:false,
+                            tt:'过关',
                             success: function(res) {
                                 if (res.confirm) {
                                     if ( that.data.grade=='高级'){
@@ -149,7 +151,7 @@ Page({
                                         let newGrade = that.data.grade=="初级"?'中级':'高级';      
                                         that.setData({grade:newGrade});  
                                         that.creatUnit();
-                                        that.setData({score:{gameIndex:0,successNum:0,skipNum:0,failNum:0}})
+                                        that.setData({score:{gameIndex:1,successNum:0,skipNum:0,failNum:0}})
                                     }
                                 }
                             }
